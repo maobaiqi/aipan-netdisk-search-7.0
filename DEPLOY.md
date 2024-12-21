@@ -47,6 +47,8 @@
 
 2. 构建并启动容器：
    ```bash
+   docker build -t aipan-netdisk-search .
+   
    docker-compose up -d
    ```
 

@@ -46,6 +46,13 @@ RUN chmod +x /app/start.sh
 # 设置公共的环境变量
 ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=3000
+ENV ADMIN_USER=admin
+ENV ADMIN_PASSWORD=password
+ENV ADMIN_EMAIL=email@example.com
+ENV JWT_SECRET=aipan
+ENV DATABASE_SCHEMA=public
+ENV DATABASE_URL=postgresql://admin:password@localhost:5432/postgres
+ENV SHADOW_DATABASE_URL=postgresql://admin:password@localhost:5432/shadow_postgres
 
 # 暴露端口
 EXPOSE 3000
