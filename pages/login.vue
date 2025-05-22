@@ -1,4 +1,7 @@
 <script setup>
+// 添加 Supabase 客户端导入
+import { supabase } from '~/utils/supabase.client'
+
 const form = reactive({
     email: '',
     password: ''
@@ -15,10 +18,7 @@ const formRules = reactive({
     ],
 })
 
-const token = useCookie('token', {
-    maxAge: 60 * 60
-})
-
+// 移除原有的 token Cookie 逻辑
 const loginBtnLoading = ref(false)
 
 // 重置表单
@@ -27,27 +27,23 @@ const resetForm = () => {
     form.password = ''
 }
 
-// 登录处理
+// 修改后的登录处理 - 直接调用 Supabase Auth
 const login = async () => {
     try {
         const valid = await formRef.value?.validate()
         if (!valid) return
 
         loginBtnLoading.value = true
-        const res = await $fetch('/api/user/register', {
-            method: 'POST',
-            body: form
-        }).catch(err => {
-            ElMessage.error('网络请求失败，请稍后重试')
-            return null
+        const { error } = await supabase.auth.signInWithPassword({
+            email: form.email,
+            password: form.password
         })
 
-        if (!res || res.code !== 200) {
-            ElMessage.error(res?.msg || '登录失败')
+        if (error) {
+            ElMessage.error(error.message || '登录失败')
             return
         }
 
-        token.value = res.data.token
         ElMessage.success('登录成功')
         navigateTo({ path: '/admin/dashboard' })
     } finally {
@@ -63,6 +59,7 @@ const handleKeyPress = (e) => {
 }
 </script>
 
+<!-- 保持 template 部分完全不变 -->
 <template>
     <div class="py-52 flex items-center justify-center bg-gray-50 px-4">
         <div class="w-[420px] bg-white p-6 rounded-lg shadow-lg">
@@ -117,6 +114,7 @@ const handleKeyPress = (e) => {
     </div>
 </template>
 
+<!-- 保持 style 部分完全不变 -->
 <style scoped>
 .custom-form-item :deep(.el-form-item__label) {
     font-size: 0.9rem;
