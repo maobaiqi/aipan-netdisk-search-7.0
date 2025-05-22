@@ -18,7 +18,6 @@ const formRules = reactive({
     ],
 })
 
-// 移除原有的 token Cookie 逻辑
 const loginBtnLoading = ref(false)
 
 // 重置表单
@@ -59,7 +58,6 @@ const handleKeyPress = (e) => {
 }
 </script>
 
-<!-- 保持 template 部分完全不变 -->
 <template>
     <div class="py-52 flex items-center justify-center bg-gray-50 px-4">
         <div class="w-[420px] bg-white p-6 rounded-lg shadow-lg">
@@ -114,7 +112,6 @@ const handleKeyPress = (e) => {
     </div>
 </template>
 
-<!-- 保持 style 部分完全不变 -->
 <style scoped>
 .custom-form-item :deep(.el-form-item__label) {
     font-size: 0.9rem;
